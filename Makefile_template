@@ -1,0 +1,13 @@
+all:
+	prog1 prog2 prog 3 ...
+prog1:prog1.c
+	gcc -o prog1 prgo1.c 
+
+prog2:prog2.c
+	gcc -o prog2 prog2.c 
+
+prog3:prog3.c
+	gcc -o prog3 prog3.c 
+
+clean:
+	rm -f prog1 prog2 prog3 ...
