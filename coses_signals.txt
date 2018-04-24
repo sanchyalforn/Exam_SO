@@ -1,0 +1,10 @@
+Nombre   	Acción     Defecto Evento
+SIGCHLD 	IGNORAR 	Un proceso hijo ha terminado o ha sido parado
+SIGCONT 	Continua 	si estaba parado
+SIGSTOP 	STOP 		Parar proceso
+SIGINT 		TERMINAR 	Interrumpido desde el teclado (CtrC)
+SIGALRM 	TERMINAR 	El contador definido por la llamada alarm ha terminado
+SIGKILL 	TERMINAR 	Terminar el proceso
+SIGSEGV 	CORE 		Referencia inválida a memória
+SIGUSR1 	TERMINAR 	Definido por el usuario (proceso)
+SIGUSR2 	TERMINAR 	Definido por el usuario (proceso)
