@@ -3,7 +3,7 @@
 
 void error_y_exit(char *s, int error) {
 	perror(s);
-	exit(error);
+	exit(error); //tambe es pot posar 1 directament i no passar int com a parametre
 }
 
 //------------------------------------------
@@ -57,8 +57,7 @@ error_y_exit("ha fallado la mutacion",1);
 
 int p = fork();
 if (p == -1) {
-	sprintf(buffer,"error...");
-	error_y_exit(buffer,1);
+	error_y_exit("string error",1);
 }
 p > 0; //al pare li torna al pid del fill
 p = 0;//al fill
