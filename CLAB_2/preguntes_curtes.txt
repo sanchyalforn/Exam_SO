@@ -1,0 +1,137 @@
+Sesión 7: Gestión de Entrada/Salida
+
+1. Qué valor devuelve read después de pulsar el Ctrl + D?
+
+    Devuelve 0 en caso de encontrarse con un end of file.
+
+2. Apunta el comando utilizado para redireccionar la entrada de un fichero al programa.
+
+    ./es1 < my_file.txt
+
+2.2. Resultado de ejecutar #ls -l | grep es
+
+    drwxrwxr-x@   3 alumne  staff    96 18 dic 09:16 Creative Cloud Fil(es)
+    drwx------@  16 alumne  staff   512 21 dic 00:27 D(es)ktop
+    drwx------+   3 alumne  staff    96  2 sep 19:59 Movi(es)
+    drwx------+   5 alumne  staff   160 26 sep 13:43 Pictur(es)
+
+3. Ejecuta un pipeline que muestre en la salida estándar el PID, el usuario y el nombre de todos los procesos bash que se están ejecutando en el sistema. Para ello utiliza los comandos ps y grep combinados con una pipe.
+
+    El comando que he usado ha sido:
+
+        ps -eo pid,user,command | grep '[b]ash'
+
+5. ¿Cúantos bytes se escriben en cada caso?¿Qué diferencias observas en lo que aparece en pantalla?
+
+Se escriben 4 bytes en representación interna de la máquina y 5 bytes cuando se pasa a string. Ya que un entero ocupa 4 bytes y para el string escribe un byte para cada carácter.
+
+En la representación interna se ven los bytes del número transformado a ascii (se ven menos de 4 bytes porque hay algunos que son "no visibles") y en la string el número se imprime correctamente (en el sentido de que se ve como un número).
+
+6a. ¿Qué función sirve para implementar el read específico del dispositivo gestionado por cada device driver?
+
+    La función read_driver_1 para el driver 1 y la función read_driver_2 para el driver 2.
+
+6b. ¿Qué son el major y el minor? ¿Para qué sirven? ¿Qué major y minor utilizan los dos device drivers?
+
+    El major y el minor son identificadores del driver. NORMALMENTE, el major indica el tipo de driver y el minor indica el driver en si.
+
+
+
+Sesión 8: Gestión de Entrada/Salida
+
+
+
+Sesión 9: Sistema de Ficheros
+
+1.
+    a)¿Cómo podéis saber los sistemas de ficheros montados en vuestro sistema y de que tipo son?
+        Haciendo #df -T
+        S.ficheros     Tipo     1K-bloques    Usado Disponible Uso% Montado en
+        /dev/sda5      ext4       16540944  5785048    9925844  37% /
+        udev           devtmpfs    1882752        4    1882748   1% /dev
+        tmpfs          tmpfs        756008      844     755164   1% /run
+        none           tmpfs          5120        0       5120   0% /run/lock
+        none           tmpfs       1890020      884    1889136   1% /run/shm
+        /dev/sda2      fuseblk   292760524 15262936  277497588   6% /media/Datos
+
+    b) ¿Cómo se puede saber el número de inodos libres de un sistema de ficheros?
+        Haciendo #df -i
+
+    c) ¿Cómo se puede saber el espacio libre de un sistema de ficheros?
+        Haciendo #df -h
+
+2.
+    #echo "esto es una prueba" > pr.txt
+    #ln -s pr.txt sl_pr
+    #ln pr.txt hl_pr
+
+    a) ¿De que tipo es cada uno de los links creados?
+            #stat pr.txt
+            Fichero: «pr.txt»
+			Tipo: Fichero regular.
+            Nodo-i: 679087      Enlaces: 2
+
+            #stat sl_pr
+            Fichero: «sl_pr» -> «pr.txt»
+            Tipo: Enlace simbólico
+            Nodo-i: 679099      Enlaces: 1
+
+            #stat hl_pr
+            Fichero: «hl_pr»
+            Tipo: Fichero regular
+            Nodo-i: 679087      Enlaces: 2
+
+        ¿Que significa el numero de enlaces?
+           	el numero de apariciones en la tabla de ficheros
+
+        ¿Que significa que pr.txt y hl_pr tengan el mismo inode?
+            Que tienen el mismo inode
+
+    b) Ejecuta cat, namei, readlink sobre sl_pr y hl_pr
+            #cat sl_pr
+            Esto es una prueba
+            #cat hl_pr
+            Esto es una prueba
+
+            #namei sl_pr //Hay diferencia ya que el sl es un enlace, que apunta al pr.txt.
+            f: sl_pr
+             l sl_pr -> pr.txt
+               - pr.txt
+            #namei hl_pr
+            f: hl_pr
+             - hl_pr
+
+            #readlink sl_pr //Hay diferencia en que sl contiene un enlace hacia pr.txt
+            pr.txt
+            #readlink hl_pr
+
+    c) Elimina pr.txt y vuelve a ejecutar
+            #stat sl_pr
+              Fichero: «sl_pr» -> «pr.txt»
+              Tamaño: 6             Bloques: 0          Bloque E/S: 4096   enlace simbólico
+              Dispositivo: 805h/2053d Nodo-i: 679099      Enlaces: 1
+              Acceso: (0777/lrwxrwxrwx)  Uid: ( 1000/    marc)   Gid: ( 1000/    marc)
+            #stat hl_pr
+              Fichero: «hl_pr»
+              Tamaño: 19            Bloques: 8          Bloque E/S: 4096   fichero regular
+              Dispositivo: 805h/2053d Nodo-i: 679087      Enlaces: 1
+              Acceso: (0664/-rw-rw-r--)  Uid: ( 1000/    marc)   Gid: ( 1000/    marc)
+
+            #cat sl_pr
+            cat: sl_pr: No existe el archivo o el directorio
+            #cat hl_pr
+            Esto es una prueba
+
+            #namei sl_pr
+            f: sl_pr
+             l sl_pr -> pr.txt
+            pr.txt - No such file or directory
+            #namei hl_pr
+            f: hl_pr
+             - hl_pr
+
+            #readlink sl_pr
+            pr.txt
+            #readlink hl_pr
+
+Las diferencias estan en que el sl_pr sigue apuntando al pr.txt, pero cuando intenta acceder no existe.

@@ -41,7 +41,7 @@
 
 
     /*********************
-            DUPX
+          DUP - DUP2
     *********************/
 
     new_channel = dup(channel);
@@ -82,3 +82,7 @@
     //file <- nou canal
     write(file,"string random\n", 14); //escrius al file
     close(file); //tancar el canal
+
+    /*********************
+            LSEEK
+    *********************/
