@@ -5,21 +5,19 @@
 
 #include "dbg.h"
 
-void Usage()
-{
+void Usage() {
 	fprintf(stderr,"Usage: invjump file n, donde 1<=n<=9\n");
 	exit(1);
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 	int i, n, mida, fd_in, fd_out;
 	char c, buff[9];
-	
+
 
 	if (argc != 3) Usage();
 	n = atoi(argv[2]);
-	
+
 	for (i=0; i<n; i++) buff[i]='\0';
 
 	fd_out = open("salida", O_WRONLY|O_EXCL|O_CREAT, 0666);
@@ -27,7 +25,7 @@ int main(int argc, char *argv[])
 
 	fd_in = open(argv[1], O_RDONLY);
 	if (fd_in<0) panic("open");
-	
+
 	mida = lseek(fd_in, 0, SEEK_END);
 	if (mida<0) panic("lseek");
 
