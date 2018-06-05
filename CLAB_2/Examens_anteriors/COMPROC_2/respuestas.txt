@@ -1,0 +1,37 @@
+1. Indica la línea de comandos utilizada para crear la pipe wc2padre
+
+mknod wc2padre p
+
+
+2. Crea un hardlink a pares.bin en el directorio actual. Llámalo pares.hl. Indica la línea de comandos utilizada.
+
+ln pares.bin pares.hl
+
+3. Utilizando comandos del sistema, demuestra fehacientemente que pares.bin y pares.hl con realmente hardlinks al mismo fichero. Indica las líneas de comandos utilizadas, sus resultados y explica la razón por la que son hardlinks.
+
+$> stat pares.bin pares.hl
+  Fichero: 'pares.bin'
+  Tamaño: 16        	Bloques: 8          Bloque E/S: 4096   fichero regular
+Dispositivo: 804h/2052d	Nodo-i: 78907296    Enlaces: 2
+Acceso: (0664/-rw-rw-r--)  Uid: ( 1000/millanva)   Gid: ( 1000/millanva)
+Acceso: 2017-05-25 17:34:23.724320569 +0200
+Modificación: 2017-05-25 17:34:23.724320569 +0200
+      Cambio: 2017-05-25 20:35:00.461565551 +0200
+    Creación: -
+  Fichero: 'pares.hl'
+  Tamaño: 16        	Bloques: 8          Bloque E/S: 4096   fichero regular
+Dispositivo: 804h/2052d	Nodo-i: 78907296    Enlaces: 2
+Acceso: (0664/-rw-rw-r--)  Uid: ( 1000/millanva)   Gid: ( 1000/millanva)
+Acceso: 2017-05-25 17:34:23.724320569 +0200
+Modificación: 2017-05-25 17:34:23.724320569 +0200
+      Cambio: 2017-05-25 20:35:00.461565551 +0200
+    Creación: -
+
+Son hardlinks al mismo fichero porque tienen según stat el mismo Nodo-i: 78907296
+
+
+También con ls, se puede ver que tienen el mismo inodo 
+ls -li pares.bin pares.hl
+78907296 -rw-rw-r-- 2 millanva millanva 16 may 25 17:34 pares.bin
+78907296 -rw-rw-r-- 2 millanva millanva 16 may 25 17:34 pares.hl
+
