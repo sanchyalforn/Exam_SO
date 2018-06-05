@@ -12,7 +12,7 @@ char buf[80];
 	exit(1);
 }
 
-void error_y_exit(char *msg) {
+void error(char *msg) {
 	perror(msg);
 	exit(1);
 }
@@ -29,11 +29,11 @@ if (argc != 3) {
 }
 
 // Abrimos el fichero solo para lectura. El control de errores siempre despues
-// llamada a sistema. 
+// llamada a sistema.
 // si lo haceis en una linea recordad: if ((fd=open(...))<0){
 fd = open (argv[2], O_RDONLY);
 if (fd < 0) {
-	error_y_exit("Abriendo fichero");	
+	error("Abriendo fichero");
 }
 
 // argv[1] es un string, si queremos una letra concreta argv[1][posicion]
@@ -44,7 +44,7 @@ letra = argv[1][0];
 ret = read(fd, &c, sizeof(c));
 i=0;
 while (ret >0) {
-	if (c==letra){
+	if (c == letra){
 		// Con la variable i controlamos en que posicion del fichero estamos
 		// Para escribir un int simplemente pasamos la direccion (&) y el tamaño (sizeof)
 		write(1, &i, sizeof(i));

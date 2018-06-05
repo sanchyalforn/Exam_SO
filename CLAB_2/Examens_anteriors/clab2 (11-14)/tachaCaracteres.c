@@ -11,7 +11,7 @@ char buf[80];
         exit(1);
 }
 
-void error_y_exit(char *msg) {
+void error(char *msg) {
         perror(msg);
         exit(1);
 }
@@ -32,7 +32,7 @@ if (argc != 2) {
 // Como luego accederemos a posiciones directamente con lseek, no es necesario volver al principio
 fd = open(argv[1], O_WRONLY);
 if (fd < 0) {
-	error_y_exit("Abriendo fichero");
+	error("Abriendo fichero");
 }
 tam=lseek(fd,0,SEEK_END);
 
@@ -47,7 +47,7 @@ while (ret > 0) {
 		// En este caso son chars, no hace falta convertir de "posicion" a "byte"
 		lseek(fd,pos,SEEK_SET);
 		write(fd, &x, sizeof(x));
-	} 
+	}
 	ret = read(0, &pos,sizeof(pos));
 }
 // Las posiciones tachadas (la cantidad) la escribimos en texto por la salida std
