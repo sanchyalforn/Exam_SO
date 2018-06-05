@@ -49,25 +49,19 @@ lrwx------ 1 millanva millanva 64 dic 19 20:34 2 -> /dev/pts/8
 
 **************************************************************************************/
 
-void
-error_y_exit (char *str)
-{
+void error_y_exit (char *str) {
     perror (str);
     exit (EXIT_FAILURE);
 }
 
-void
-Usage ()
-{
+void Usage () {
     char buffer[256];
     sprintf (buffer, "USAGE: userprocs username\n");
     write (1, buffer, strlen (buffer));
     exit (EXIT_FAILURE);
 }
 
-int
-main (int argc, char *argv[])
-{
+int main (int argc, char *argv[]) {
 
     // Pipes
     int   ps2grep[2];

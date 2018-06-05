@@ -39,6 +39,7 @@
            SOCKETS
     *********************/
 
+    /**???????????????????/
 
     /*********************
           DUP - DUP2
@@ -86,3 +87,12 @@
     /*********************
             LSEEK
     *********************/
+    int fd      = fitxer_desti;
+    int despl   = desplaçament;
+    int pos = lseek(fd,despl,rel);
+
+    /*
+    rel = SEEK_SET -> posicio_l/e = desplaçament
+    rel = SEEK_CUR -> posicio_l/e = posicio_l/e + desplaçament
+    rel = SEEK_END -> posicio_l/e = file_size + desplaçament
+    */
